@@ -1,4 +1,3 @@
-REM pruebas de cambios pal repo
 
 DROP TABLE oferta_de_trabajo;
 DROP TYPE oferta_de_trabajo_t;
