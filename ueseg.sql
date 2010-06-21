@@ -1,4 +1,3 @@
-REM pruebas de cambios pal repo
 
 DROP TABLE oferta_de_trabajo;
 DROP TYPE oferta_de_trabajo_t;
@@ -57,6 +56,62 @@ CREATE TYPE oferta_de_trabajo_t AS OBJECT(
 	pertenece_a REF organizacion_t
 );
 /
+
+CREATE TYPE ciudad_t AS OBJECT(
+	ciudad VARCHAR2(32),
+	estado VARCHAR2(32),
+	pais VARCHAR2(32)
+);
+/
+
+REM
+REM Tipo creado por ahora solo para modelar las ocupaciones de padres y madres. Luego para los empleos de los egresados. 
+REM
+
+CREATE TYPE empleo_t AS OBJECT(
+	cargo VARCHAR2(32),
+	fecha_inicio DATE,
+	fecha_fin DATE,
+	area VARCHAR2(32)
+
+);
+
+CREATE TYPE egresado_t AS OBJECT(
+	nombres VARCHAR2(64),
+	apellidos VARCHAR2(64),
+	nacimiento DATE,
+	estado_civil VARCHAR2(32),
+	procedencia_padre REF ciudad_t;
+	procedencia_madre REF ciudad_t;
+	ocupacion_padre REF empelo_t; 
+	ocupacion_madre REF empleo_t;
+	rem no se si hay que hacer ademas de esto varrays o algo asi porq creo q las ocupaciones son multivaluados. 
+	telefono REF telefono_t;
+	email REF email_t;
+	
+);
+
+CREATE TYPE sede_t AS OBJECT(
+	nombre VARCHAR2(32),
+	ubicacion REF direccion_t,
+	numero_estudiantes NUMBER,
+	fecha_fundacion DATE
+);
+
+CREATE TYPE carrera_t AS OBJECT(
+	nombre VARCHAR2(32),
+	numero_estudiantes NUMBER
+);
+
+REM
+REM Tabla que implementa la relacion "estudia". Son referencias a cada uno de los objetos que menciona. 
+REM
+
+CREATE TABLE ESTUDIA(
+	egresado REF egresado_t,
+	sede REF sede_t,
+	carrera REF carrera_t
+);
 
 REM
 REM CREACION DE TABLAS
